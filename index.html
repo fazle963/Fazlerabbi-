@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD Fazle Rabbi - Student Consultant & Business Advisor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #111827 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo-placeholder {
+            background: linear-gradient(45deg, #6b7280, #9ca3af);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+        }
+        
+        .post-content {
+            display: none;
+        }
+        
+        .post-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-300 text-gray-800">
+    <!-- Navigation -->
+    <nav class="gradient-bg shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="logo-placeholder w-10 h-10 text-sm">FR</div>
+                    <span class="text-xl font-bold text-white">MD Fazle Rabbi</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <button onclick="showPage('home')" class="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</button>
+                    <button onclick="showPage('categories')" class="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Categories</button>
+                    <button onclick="showPage('contact')" class="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</button>
+                    <button onclick="showAdminLogin()" class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Admin</button>
+                </div>
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <button onclick="showPage('home')" class="block text-gray-200 hover:text-white px-3 py-2 rounded-md text-base font-medium w-full text-left">Home</button>
+                <button onclick="showPage('categories')" class="block text-gray-200 hover:text-white px-3 py-2 rounded-md text-base font-medium w-full text-left">Categories</button>
+                <button onclick="showPage('contact')" class="block text-gray-200 hover:text-white px-3 py-2 rounded-md text-base font-medium w-full text-left">Contact</button>
+                <button onclick="showAdminLogin()" class="block bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded-md text-base font-medium w-full text-left">Admin</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Homepage -->
+    <div id="home-page" class="page-content">
+        <!-- Hero Section -->
+        <section class="gradient-bg py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="logo-placeholder w-24 h-24 text-2xl mx-auto mb-6">FR</div>
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">MD Fazle Rabbi</h1>
+                <p class="text-xl md:text-2xl text-gray-200 mb-8">Student Consultant & Business Advisor</p>
+                <button onclick="showPage('contact')" class="bg-gray-700 hover:bg-gray-600 text-white px-8 py-3 rounded-lg text-lg font-medium transition-colors">Get In Touch</button>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section class="py-16 bg-gray-100">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <div class="logo-placeholder w-16 h-16 text-lg mx-auto mb-4">FR</div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">About Me</h2>
+                </div>
+                <div class="bg-white rounded-lg p-8 shadow-lg">
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-4">International Student & Advisor</h3>
+                            <p class="text-gray-600 mb-4">As an international student myself, I understand the challenges and opportunities that come with studying abroad. I'm passionate about helping fellow students navigate their journey to international education.</p>
+                            <p class="text-gray-600 mb-4">My mission is to provide comprehensive advice and support to students looking to study in China, Korea, and other destinations.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Future Business Ventures</h3>
+                            <p class="text-gray-600 mb-4">I'm actively planning to establish a company dedicated to supporting international students with their academic and career goals.</p>
+                            <p class="text-gray-600">Additionally, I'm exploring entrepreneurial opportunities in watches, electronics, beauty products, and import-export. These business ideas and insights are shared through my blog posts to help other aspiring entrepreneurs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Preview -->
+        <section class="py-16 bg-gray-300">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-12">My Services</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg p-6 card-hover shadow-lg">
+                        <div class="logo-placeholder w-12 h-12 text-sm mb-4">📚</div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Student Consultancy</h3>
+                        <p class="text-gray-600">Complete guidance for studying in China and Korea, including admission processes and visa assistance.</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 card-hover shadow-lg">
+                        <div class="logo-placeholder w-12 h-12 text-sm mb-4">✈️</div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Tour Planning</h3>
+                        <p class="text-gray-600">Low-cost tour options and comprehensive tour arrangement guidance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Categories Page -->
+    <div id="categories-page" class="page-content" style="display: none;">
+        <section class="py-16 bg-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <div class="logo-placeholder w-16 h-16 text-lg mx-auto mb-4">FR</div>
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Categories</h1>
+                    <p class="text-xl text-gray-600">Explore our comprehensive guides and services</p>
+                </div>
+
+                <!-- Step 1: Student Consultancy -->
+                <div class="mb-16">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">Step 1: Student Consultancy</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-white rounded-lg p-6 card-hover cursor-pointer shadow-lg" onclick="showPost('china-admission')">
+                            <div class="logo-placeholder w-10 h-10 text-sm mb-4">🇨🇳</div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">China Admission Process</h3>
+                            <p class="text-gray-600">Complete step-by-step guide for university admission in China</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-6 card-hover cursor-pointer shadow-lg" onclick="showPost('korea-admission')">
+                            <div class="logo-placeholder w-10 h-10 text-sm mb-4">🇰🇷</div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Korea Admission Process</h3>
+                            <p class="text-gray-600">Complete step-by-step guide for university admission in Korea</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-6 card-hover cursor-pointer shadow-lg" onclick="showPost('china-visa')">
+                            <div class="logo-placeholder w-10 h-10 text-sm mb-4">📋</div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">China Visa Processing</h3>
+                            <p class="text-gray-600">Detailed visa processing information for China</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-6 card-hover cursor-pointer shadow-lg" onclick="showPost('korea-visa')">
+                            <div class="logo-placeholder w-10 h-10 text-sm mb-4">📄</div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Korea Visa Processing</h3>
+                            <p class="text-gray-600">Detailed visa processing information for Korea</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Business Blog Posts -->
+                <div class="mb-16">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">Step 2: Business Blog Posts</h2>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-white rounded-lg p-6 card-hover cursor-pointer shadow-lg" onclick="showPost('watches-business')">
+                            <div class="logo-placeholder w-10 h-10 text-sm mb-4">⌚</div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Watches Business</h3>
+                            <p class="text-gray-600">Product details and pricing strategies for watch business</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-6 card-hover cursor-pointer shadow-lg" onclick="showPost('electronics-business')">
+                            <div class="logo-placeholder w-10 h-10 text-sm mb-4">📱</div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Electronics & Beauty</h3>
+                            <p class="text-gray-600">Electronics and beauty products business opportunities</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-6 card-hover cursor-pointer shadow-lg" onclick="showPost('import-export')">
+                            <div class="logo-placeholder w-10 h-10 text-sm mb-4">🚢</div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Import-Export</h3>
+                            <p class="text-gray-600">Import-export business ideas and strategies</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Tours -->
+                <div class="mb-16">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">Step 3: Tours</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-white rounded-lg p-6 card-hover cursor-pointer shadow-lg" onclick="showPost('low-cost-tours')">
+                            <div class="logo-placeholder w-10 h-10 text-sm mb-4">💰</div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Low-Cost Tour Options</h3>
+                            <p class="text-gray-600">Affordable travel destinations and budget-friendly options</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-6 card-hover cursor-pointer shadow-lg" onclick="showPost('tour-arrangement')">
+                            <div class="logo-placeholder w-10 h-10 text-sm mb-4">📋</div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Tour Arrangement Guide</h3>
+                            <p class="text-gray-600">Everything needed to arrange and plan tours</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact-page" class="page-content" style="display: none;">
+        <section class="py-16 bg-gray-100">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <div class="logo-placeholder w-16 h-16 text-lg mx-auto mb-4">FR</div>
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Contact Me</h1>
+                    <p class="text-xl text-gray-600">Get in touch for consultations and inquiries</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Contact Information -->
+                    <div class="bg-white rounded-lg p-8 shadow-lg">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Contact Information</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="logo-placeholder w-8 h-8 text-xs">📧</div>
+                                <div>
+                                    <p class="text-gray-600">Email</p>
+                                    <a href="mailto:fazle9530@gmail.com" class="text-gray-800 hover:text-gray-600">fazle9530@gmail.com</a>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="logo-placeholder w-8 h-8 text-xs">💼</div>
+                                <div>
+                                    <p class="text-gray-600">LinkedIn</p>
+                                    <a href="https://www.linkedin.com/in/fazle-rabbi-527257319?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-gray-800 hover:text-gray-600">LinkedIn Profile</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Links -->
+                        <div class="mt-8">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Quick Links to Categories</h3>
+                            <div class="space-y-2">
+                                <button onclick="showPage('categories')" class="block w-full text-left bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded transition-colors">Student Consultancy</button>
+                                <button onclick="showPage('categories')" class="block w-full text-left bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded transition-colors">Business Blog Posts</button>
+                                <button onclick="showPage('categories')" class="block w-full text-left bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded transition-colors">Tour Planning</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question Form -->
+                    <div class="bg-gray-700 rounded-lg p-8">
+                        <h2 class="text-2xl font-semibold text-white mb-6">Ask a Question</h2>
+                        <form onsubmit="submitQuestion(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-gray-300 mb-2">Name</label>
+                                <input type="text" required class="w-full bg-gray-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-gray-500">
+                            </div>
+                            <div>
+                                <label class="block text-gray-300 mb-2">Email</label>
+                                <input type="email" required class="w-full bg-gray-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-gray-500">
+                            </div>
+                            <div>
+                                <label class="block text-gray-300 mb-2">Category</label>
+                                <select class="w-full bg-gray-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-gray-500">
+                                    <option>Student Consultancy</option>
+                                    <option>Business Blog Posts</option>
+                                    <option>Tours</option>
+                                    <option>General Inquiry</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-300 mb-2">Your Question</label>
+                                <textarea required rows="4" class="w-full bg-gray-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-gray-500"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-gray-600 hover:bg-gray-500 text-white py-2 rounded transition-colors">Send Question</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Post Content Modal -->
+    <div id="post-modal" class="admin-panel">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-gray-800 rounded-lg max-w-4xl w-full max-h-screen overflow-y-auto">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="flex items-center space-x-3">
+                            <div class="logo-placeholder w-10 h-10 text-sm">FR</div>
+                            <h2 id="post-title" class="text-2xl font-bold text-white"></h2>
+                        </div>
+                        <button onclick="closePost()" class="text-gray-400 hover:text-white">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="post-content" class="text-gray-300 prose prose-invert max-w-none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="admin-login-modal" class="admin-panel">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-gray-800 rounded-lg p-8 w-full max-w-md">
+                <div class="text-center mb-6">
+                    <div class="logo-placeholder w-16 h-16 text-lg mx-auto mb-4">FR</div>
+                    <h2 class="text-2xl font-bold text-white">Admin Login</h2>
+                </div>
+                <form onsubmit="adminLogin(event)">
+                    <div class="mb-4">
+                        <label class="block text-gray-300 mb-2">Password</label>
+                        <input type="password" id="admin-password" required class="w-full bg-gray-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-gray-500">
+                    </div>
+                    <button type="submit" class="w-full bg-gray-600 hover:bg-gray-500 text-white py-2 rounded transition-colors mb-4">Login</button>
+                    <button type="button" onclick="closeAdminLogin()" class="w-full bg-gray-700 hover:bg-gray-600 text-white py-2 rounded transition-colors">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="admin-panel" class="admin-panel">
+        <div class="min-h-screen bg-gray-900 p-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="bg-gray-800 rounded-lg p-6 mb-6">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-3">
+                            <div class="logo-placeholder w-10 h-10 text-sm">FR</div>
+                            <h1 class="text-2xl font-bold text-white">Admin Panel</h1>
+                        </div>
+                        <button onclick="logoutAdmin()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors">Logout</button>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- Post List -->
+                    <div class="md:col-span-1 bg-gray-800 rounded-lg p-6">
+                        <h2 class="text-xl font-semibold text-white mb-4">Posts</h2>
+                        <div class="space-y-2" id="admin-post-list">
+                            <button onclick="editPost('china-admission')" class="block w-full text-left bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm">China Admission</button>
+                            <button onclick="editPost('korea-admission')" class="block w-full text-left bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm">Korea Admission</button>
+                            <button onclick="editPost('china-visa')" class="block w-full text-left bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm">China Visa</button>
+                            <button onclick="editPost('korea-visa')" class="block w-full text-left bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm">Korea Visa</button>
+                            <button onclick="editPost('watches-business')" class="block w-full text-left bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm">Watches Business</button>
+                            <button onclick="editPost('electronics-business')" class="block w-full text-left bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm">Electronics Business</button>
+                            <button onclick="editPost('import-export')" class="block w-full text-left bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm">Import-Export</button>
+                            <button onclick="editPost('low-cost-tours')" class="block w-full text-left bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm">Low-Cost Tours</button>
+                            <button onclick="editPost('tour-arrangement')" class="block w-full text-left bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm">Tour Arrangement</button>
+                        </div>
+                    </div>
+
+                    <!-- Editor -->
+                    <div class="md:col-span-2 bg-gray-800 rounded-lg p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-semibold text-white">Edit Post</h2>
+                            <button onclick="savePost()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors">Save Changes</button>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-gray-300 mb-2">Title</label>
+                                <input type="text" id="edit-title" class="w-full bg-gray-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-gray-500">
+                            </div>
+                            <div>
+                                <label class="block text-gray-300 mb-2">Content</label>
+                                <textarea id="edit-content" rows="15" class="w-full bg-gray-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-gray-500"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="gradient-bg py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="logo-placeholder w-12 h-12 text-sm mx-auto mb-4">FR</div>
+                <h3 class="text-xl font-semibold text-white mb-4">MD Fazle Rabbi</h3>
+                <p class="text-gray-300 mb-4">Empowering students and entrepreneurs through expert guidance and innovative business solutions.</p>
+                <p class="text-gray-400 text-sm">© 2024 MD Fazle Rabbi. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample post data
+        const posts = {
+            'china-admission': {
+                title: 'China University Admission Process',
+                content: `
+                    <h3 class="text-xl font-semibold mb-4">Step-by-Step Guide to China University Admission</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold mb-2">1. Research Universities</h4>
+                            <p>Research top universities in China that offer your desired program. Consider factors like ranking, location, language of instruction, and tuition fees.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">2. Prepare Required Documents</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Academic transcripts</li>
+                                <li>Language proficiency certificates (HSK for Chinese programs, IELTS/TOEFL for English programs)</li>
+                                <li>Passport copy</li>
+                                <li>Personal statement</li>
+                                <li>Recommendation letters</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">3. Application Process</h4>
+                            <p>Submit applications through university websites or platforms like CUCAS. Pay attention to deadlines and requirements for each university.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">4. Scholarship Applications</h4>
+                            <p>Apply for Chinese Government Scholarships, university scholarships, or other funding opportunities to reduce costs.</p>
+                        </div>
+                    </div>
+                `
+            },
+            'korea-admission': {
+                title: 'Korea University Admission Process',
+                content: `
+                    <h3 class="text-xl font-semibold mb-4">Complete Guide to Korean University Admission</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold mb-2">1. Choose Your Program</h4>
+                            <p>Select universities and programs that match your academic background and career goals. Korea offers excellent programs in technology, business, and arts.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">2. Language Requirements</h4>
+                            <p>For Korean-taught programs, you'll need TOPIK (Test of Proficiency in Korean). For English programs, IELTS or TOEFL scores are required.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">3. Application Documents</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Application form</li>
+                                <li>Academic certificates and transcripts</li>
+                                <li>Language test scores</li>
+                                <li>Study plan</li>
+                                <li>Financial proof</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">4. Scholarship Opportunities</h4>
+                            <p>Apply for KGSP (Korean Government Scholarship Program) or university-specific scholarships for financial support.</p>
+                        </div>
+                    </div>
+                `
+            },
+            'china-visa': {
+                title: 'China Student Visa Processing',
+                content: `
+                    <h3 class="text-xl font-semibold mb-4">China Student Visa (X1/X2) Processing Guide</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold mb-2">Visa Types</h4>
+                            <p><strong>X1 Visa:</strong> For studies longer than 180 days<br>
+                            <strong>X2 Visa:</strong> For studies shorter than 180 days</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Required Documents</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Valid passport</li>
+                                <li>Admission letter from Chinese university</li>
+                                <li>JW201 or JW202 form</li>
+                                <li>Physical examination record</li>
+                                <li>Financial proof</li>
+                                <li>Passport photos</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Processing Time</h4>
+                            <p>Normal processing: 4-7 working days<br>
+                            Express processing: 2-3 working days (additional fee applies)</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Important Notes</h4>
+                            <p>After arrival in China with X1 visa, you must apply for a residence permit within 30 days.</p>
+                        </div>
+                    </div>
+                `
+            },
+            'korea-visa': {
+                title: 'Korea Student Visa Processing',
+                content: `
+                    <h3 class="text-xl font-semibold mb-4">Korea Student Visa (D-2) Processing Guide</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold mb-2">Visa Categories</h4>
+                            <p><strong>D-2-1:</strong> Associate degree programs<br>
+                            <strong>D-2-2:</strong> Bachelor's degree programs<br>
+                            <strong>D-2-3:</strong> Master's degree programs<br>
+                            <strong>D-2-4:</strong> Doctoral degree programs</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Required Documents</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Visa application form</li>
+                                <li>Passport and photos</li>
+                                <li>Certificate of admission</li>
+                                <li>Academic certificates</li>
+                                <li>Financial documents</li>
+                                <li>Health certificate</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibent mb-2">Processing Information</h4>
+                            <p>Processing time: 5-7 working days<br>
+                            Visa fee: Varies by nationality<br>
+                            Validity: Usually matches study period</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">After Arrival</h4>
+                            <p>Register at the local immigration office within 90 days and obtain an Alien Registration Card (ARC).</p>
+                        </div>
+                    </div>
+                `
+            },
+            'watches-business': {
+                title: 'Watches Business Opportunities',
+                content: `
+                    <h3 class="text-xl font-semibold mb-4">Watch Business: Products and Pricing Strategy</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold mb-2">Product Categories</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li><strong>Luxury Watches:</strong> Premium brands, high-end materials</li>
+                                <li><strong>Fashion Watches:</strong> Trendy designs, affordable luxury</li>
+                                <li><strong>Smart Watches:</strong> Technology-integrated timepieces</li>
+                                <li><strong>Sports Watches:</strong> Durable, activity-focused designs</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Pricing Strategy</h4>
+                            <p><strong>Entry Level:</strong> $50-200 - Fashion and basic smart watches<br>
+                            <strong>Mid Range:</strong> $200-800 - Quality brands with good features<br>
+                            <strong>Premium:</strong> $800+ - Luxury and high-end smart watches</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Market Analysis</h4>
+                            <p>The global watch market is growing, with increasing demand for both traditional luxury watches and smart wearables. Focus on quality, brand reputation, and customer service.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Business Tips</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Build relationships with reliable suppliers</li>
+                                <li>Focus on warranty and after-sales service</li>
+                                <li>Develop both online and offline presence</li>
+                                <li>Stay updated with latest trends and technology</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            'electronics-business': {
+                title: 'Electronics & Beauty Products Business',
+                content: `
+                    <h3 class="text-xl font-semibold mb-4">Electronics & Beauty Products Business Guide</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold mb-2">Electronics Product Lines</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li><strong>Mobile Accessories:</strong> Cases, chargers, headphones</li>
+                                <li><strong>Home Electronics:</strong> Smart home devices, appliances</li>
+                                <li><strong>Gaming Accessories:</strong> Controllers, headsets, keyboards</li>
+                                <li><strong>Audio Equipment:</strong> Speakers, earbuds, sound systems</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Beauty Products Categories</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li><strong>Skincare:</strong> Cleansers, moisturizers, serums</li>
+                                <li><strong>Makeup:</strong> Cosmetics, tools, accessories</li>
+                                <li><strong>Hair Care:</strong> Shampoos, treatments, styling tools</li>
+                                <li><strong>Personal Care:</strong> Fragrances, body care products</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Pricing Models</h4>
+                            <p><strong>Electronics:</strong> 20-40% markup from wholesale<br>
+                            <strong>Beauty Products:</strong> 50-100% markup due to brand value<br>
+                            <strong>Bundle Deals:</strong> Offer package discounts to increase sales</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Success Strategies</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Focus on trending and seasonal products</li>
+                                <li>Build strong supplier relationships</li>
+                                <li>Invest in digital marketing and social media</li>
+                                <li>Provide excellent customer service and returns policy</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            'import-export': {
+                title: 'Import-Export Business Ideas',
+                content: `
+                    <h3 class="text-xl font-semibold mb-4">Import-Export Business Opportunities</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold mb-2">High-Demand Import Products</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li><strong>Electronics:</strong> Smartphones, laptops, accessories</li>
+                                <li><strong>Fashion:</strong> Clothing, shoes, accessories</li>
+                                <li><strong>Home Goods:</strong> Furniture, decor, appliances</li>
+                                <li><strong>Health Products:</strong> Supplements, medical devices</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Export Opportunities</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li><strong>Local Specialties:</strong> Traditional crafts, food products</li>
+                                <li><strong>Agricultural Products:</strong> Spices, tea, organic products</li>
+                                <li><strong>Textiles:</strong> Fabrics, garments, home textiles</li>
+                                <li><strong>Handicrafts:</strong> Artisan products, cultural items</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Key Considerations</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Research import/export regulations and tariffs</li>
+                                <li>Understand customs procedures and documentation</li>
+                                <li>Build relationships with freight forwarders</li>
+                                <li>Consider currency exchange risks</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Getting Started</h4>
+                            <p>Start small with a few products, focus on quality suppliers, and gradually expand your product range. Consider using platforms like Alibaba for sourcing and building initial relationships.</p>
+                        </div>
+                    </div>
+                `
+            },
+            'low-cost-tours': {
+                title: 'Low-Cost Tour Options',
+                content: `
+                    <h3 class="text-xl font-semibold mb-4">Affordable Travel Destinations and Tips</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold mb-2">Budget-Friendly Destinations</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li><strong>Southeast Asia:</strong> Thailand, Vietnam, Cambodia - $30-50/day</li>
+                                <li><strong>South Asia:</strong> India, Nepal, Sri Lanka - $25-40/day</li>
+                                <li><strong>Eastern Europe:</strong> Poland, Hungary, Czech Republic - $40-60/day</li>
+                                <li><strong>Central America:</strong> Guatemala, Nicaragua, Honduras - $35-50/day</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Money-Saving Tips</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Travel during off-peak seasons</li>
+                                <li>Use budget airlines and book in advance</li>
+                                <li>Stay in hostels or budget accommodations</li>
+                                <li>Eat at local restaurants and street food</li>
+                                <li>Use public transportation</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Package Tour Options</h4>
+                            <p><strong>7-Day Southeast Asia:</strong> $800-1200 including flights<br>
+                            <strong>10-Day India Golden Triangle:</strong> $600-900<br>
+                            <strong>5-Day Eastern Europe:</strong> $500-700</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">What's Included</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Accommodation (budget to mid-range)</li>
+                                <li>Transportation between cities</li>
+                                <li>Some meals (usually breakfast)</li>
+                                <li>Local guide services</li>
+                                <li>Entry fees to major attractions</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            'tour-arrangement': {
+                title: 'Tour Arrangement Guide',
+                content: `
+                    <h3 class="text-xl font-semibold mb-4">Complete Guide to Arranging Tours</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold mb-2">Pre-Planning Phase</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Determine target audience and budget range</li>
+                                <li>Research destinations and seasonal considerations</li>
+                                <li>Identify unique selling points for your tours</li>
+                                <li>Analyze competitor offerings and pricing</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Essential Requirements</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li><strong>Legal:</strong> Tour operator license, insurance coverage</li>
+                                <li><strong>Partnerships:</strong> Hotels, restaurants, transport providers</li>
+                                <li><strong>Staff:</strong> Tour guides, customer service team</li>
+                                <li><strong>Technology:</strong> Booking system, payment processing</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Tour Package Components</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Accommodation bookings and confirmations</li>
+                                <li>Transportation arrangements (flights, buses, trains)</li>
+                                <li>Meal planning and restaurant reservations</li>
+                                <li>Activity bookings and entrance tickets</li>
+                                <li>Local guide assignments</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Marketing and Sales</h4>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Develop attractive tour brochures and websites</li>
+                                <li>Use social media and online travel platforms</li>
+                                <li>Partner with travel agents and agencies</li>
+                                <li>Collect and showcase customer testimonials</li>
+                                <li>Offer early bird discounts and group rates</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Quality Assurance</h4>
+                            <p>Regularly inspect accommodations, test tour routes, train guides, and gather customer feedback to continuously improve your tour offerings.</p>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        let currentEditingPost = null;
+        let isLoggedIn = false;
+
+        // Navigation functions
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.style.display = 'none';
+            });
+            
+            // Show selected page
+            document.getElementById(pageId + '-page').style.display = 'block';
+            
+            // Close mobile menu
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        // Post functions
+        function showPost(postId) {
+            const post = posts[postId];
+            if (post) {
+                document.getElementById('post-title').textContent = post.title;
+                document.getElementById('post-content').innerHTML = post.content;
+                document.getElementById('post-modal').style.display = 'block';
+            }
+        }
+
+        function closePost() {
+            document.getElementById('post-modal').style.display = 'none';
+        }
+
+        // Admin functions
+        function showAdminLogin() {
+            document.getElementById('admin-login-modal').style.display = 'block';
+        }
+
+        function closeAdminLogin() {
+            document.getElementById('admin-login-modal').style.display = 'none';
+            document.getElementById('admin-password').value = '';
+        }
+
+        function adminLogin(event) {
+            event.preventDefault();
+            const password = document.getElementById('admin-password').value;
+            
+            // Simple password check (in real implementation, use proper authentication)
+            if (password === 'fazle2024') {
+                isLoggedIn = true;
+                closeAdminLogin();
+                document.getElementById('admin-panel').style.display = 'block';
+            } else {
+                alert('Incorrect password. Please try again.');
+            }
+        }
+
+        function logoutAdmin() {
+            isLoggedIn = false;
+            document.getElementById('admin-panel').style.display = 'none';
+            currentEditingPost = null;
+        }
+
+        function editPost(postId) {
+            if (!isLoggedIn) return;
+            
+            currentEditingPost = postId;
+            const post = posts[postId];
+            
+            document.getElementById('edit-title').value = post.title;
+            document.getElementById('edit-content').value = post.content.replace(/<[^>]*>/g, '').trim();
+        }
+
+        function savePost() {
+            if (!isLoggedIn || !currentEditingPost) return;
+            
+            const title = document.getElementById('edit-title').value;
+            const content = document.getElementById('edit-content').value;
+            
+            // Convert line breaks to HTML paragraphs for basic formatting
+            const formattedContent = content.split('\n\n').map(paragraph => 
+                paragraph.trim() ? `<p class="mb-4">${paragraph.replace(/\n/g, '<br>')}</p>` : ''
+            ).join('');
+            
+            posts[currentEditingPost] = {
+                title: title,
+                content: formattedContent
+            };
+            
+            alert('Post updated successfully!');
+        }
+
+        // Contact form
+        function submitQuestion(event) {
+            event.preventDefault();
+            alert('Thank you for your question! MD Fazle Rabbi will get back to you soon via email.');
+            event.target.reset();
+        }
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('admin-panel')) {
+                if (event.target.id === 'post-modal') {
+                    closePost();
+                } else if (event.target.id === 'admin-login-modal') {
+                    closeAdminLogin();
+                }
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('home');
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'971114b8757a4e9f',t:'MTc1NTUxNjY0NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
